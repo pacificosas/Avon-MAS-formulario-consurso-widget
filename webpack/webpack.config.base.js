@@ -1,5 +1,5 @@
 const path = require('path')
-const CopyPlugin = require('copy-webpack-plugin')
+// const CopyPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   entry: path.resolve(__dirname, '../src/index.js'),
@@ -14,24 +14,25 @@ module.exports = {
   resolve: {
     extensions: ['*', '.js', '.jsx']
   },
-
-  rules: [
-    {
-      test: /\.js$/,
-      exclude: /node_modules/,
-      loader: 'babel-loader'
-    }
-  ],
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader'
+      }
+    ]
+  },
 
   plugins: [
-    new CopyPlugin({
-      patterns: [
-        {
-          from: '**/*.*',
-          context: path.resolve(__dirname, '../public')
-        }
-      ]
-    })
+    // new CopyPlugin({
+    //   patterns: [
+    //     {
+    //       from: '*.*',
+    //       context: path.resolve(__dirname, '../public')
+    //     }
+    //   ]
+    // })
 
   ]
 

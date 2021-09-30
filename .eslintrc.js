@@ -17,6 +17,8 @@ module.exports = {
   plugins: [
     'react'
   ],
-  rules: {
-  }
+  ignorePatterns: [
+    '.gitignore',
+    'dist/**'
+  ]
 }
