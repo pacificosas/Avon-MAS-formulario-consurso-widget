@@ -1,5 +1,5 @@
 
-const api = 'https://apps.pacificamello.com/avonUtilidades/api/v1'
+const api = process.env.API_UTILS
 
 const fetchData = country => type => async from => {
   const res = await fetch(`${api}/geography/${type}?country=${country}${from >= 0 ? '&fromId=' + from : ''}`)

@@ -39,7 +39,8 @@ const validationSchema = Yup.object().shape({
   acceptTerms: Yup.boolean().oneOf([true], 'Debes aceptar los terminos y condiciones para continuar'),
   newsLetter: Yup.boolean()
 })
-console.log(context.country)
+
+const api = process.env.API_FORM
 const Form = () => {
   const formik = useFormik({
     validationSchema: validationSchema,
@@ -73,7 +74,7 @@ const Form = () => {
           return
         }
       }
-      fetch('http://localhost:3000/api/users/co',
+      fetch(`${api}/users/${context.country}`,
         {
           headers: { 'Content-Type': 'application/json' },
           method: 'POST',
