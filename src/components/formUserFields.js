@@ -40,87 +40,99 @@ const FormUserFields = ({ formik }) => {
       getTowns(currentCity)
     }
   }, [formik.values.city])
+  const validate = name => {
+    if (formik.touched[name] && formik.errors[name]) {
+      return true
+    }
+    return false
+  }
+
+  const getError = (name) => {
+    return (formik.touched[name]) && formik.errors[name]
+  }
 
   return <React.Fragment>
      <TextField
-          label="Nombre Completo"
+          label="Nombre Completo *"
           name="firstName"
           onChange={formik.handleChange}
           value={formik.values.firstName}
           size="small"
-          // error="true"
-          // helperText="error aca"
+          error={validate('firstName') }
+          helperText={getError('firstName')}
         />
 
         <TextField
-          label="Primer Apellido"
+          label="Primer Apellido *"
           name="firstLastName"
           onChange={formik.handleChange}
           value={formik.values.firstLastName}
           size="small"
-          // error="true"
-          // helperText="error aca"
+          error={validate('firstLastName')}
+          helperText={getError('firstLastName')}
         />
 
         <TextField
-          label="Segundo Apellido"
+          label="Segundo Apellido *"
           name="secondLastName"
           onChange={formik.handleChange}
           value={formik.values.secondLastName}
           size="small"
-          // error="true"
-          // helperText="error aca"
+          error={validate('secondLastName')}
+          helperText={getError('secondLastName')}
         />
 
         <DatePicker
-          label="Fecha de Nacimiento"
+          label="Fecha de Nacimiento *"
           name="birthDate"
           onChange={(val) => {
             formik.setFieldValue('birthDate', val)
           }}
           size="small"
-          // error="true"
-          // helperText="error aca"
+          error={validate('birthDate')}
+          helperText={getError('birthDate')}
 
         />
           <TextField
-          label="Celular"
+          label="Celular *"
           name="cellPhone"
           onChange={formik.handleChange}
           value={formik.values.cellPhone}
           size="small"
-          // error="true"
-          // helperText="error aca"
+          error={validate('cellPhone')}
+          helperText={getError('cellPhone')}
         />
         <TextField
-          label="Correo electronico"
+          label="Correo electronico *"
           name="email"
           onChange={formik.handleChange}
           value={formik.values.email}
           size="small"
-          // error="true"
-          // helperText="error aca"
+          error={validate('email')}
+          helperText={getError('email')}
         />
         <Select
           name="documentIdType"
           value={formik.values.documentIdType}
-          label="Tipo de documento"
+          label="Tipo de documento *"
           onChange={formik.handleChange}
           size="small"
           options={[
             { value: 'ciudadana', label: 'Documento de Ciudadania' },
             { value: 'extranjera', label: 'Documento de Extranjeria' }
           ]}
+          error={validate('documentIdType')}
+          helperText={getError('documentIdType')}
         />
 
         <TextField
-          label="Documento de identidad"
+          label="Documento de identidad *"
           name="documentId"
           onChange={formik.handleChange}
           value={formik.values.documentId}
           size="small"
-          // error="true"
-          // helperText="error aca"
+          error={validate('documentId')}
+          helperText={getError('documentId')}
         />
 
         <Select
@@ -130,6 +142,8 @@ const FormUserFields = ({ formik }) => {
           onChange={formik.handleChange}
           size="small"
           options={departments}
+          error={validate('department')}
+          helperText={getError('department')}
         />
 
         <Select
@@ -139,6 +153,8 @@ const FormUserFields = ({ formik }) => {
           onChange={formik.handleChange}
           size="small"
           options={cities}
+          error={validate('city')}
+          helperText={getError('city')}
         />
 
         {country !== 'co' &&
@@ -149,6 +165,8 @@ const FormUserFields = ({ formik }) => {
             onChange={formik.handleChange}
             size="small"
             options={towns}
+            error={validate('town')}
+            helperText={getError('town')}
           />
         }
 
@@ -158,8 +176,8 @@ const FormUserFields = ({ formik }) => {
           onChange={formik.handleChange}
           value={formik.values.instagram}
           size="small"
-          // error="true"
-          // helperText="error aca"
+          error={validate('instagram')}
+          helperText={getError('instagram')}
         />
 
   </React.Fragment>

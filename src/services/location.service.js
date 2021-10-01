@@ -20,7 +20,7 @@ const fetchData = country => type => async from => {
 const getLabels = (country) => {
   if (country === 'co') {
     return {
-      department: 'Departamento',
+      department: 'Departamento *',
       city: 'Ciudad',
       town: null
     }
@@ -28,7 +28,7 @@ const getLabels = (country) => {
 
   if (country === 'ec') {
     return {
-      department: 'Provincia',
+      department: 'Provincia *',
       city: 'Canton',
       town: 'Parroquia'
     }
@@ -36,7 +36,7 @@ const getLabels = (country) => {
 
   if (country === 'pe') {
     return {
-      department: 'Departamento',
+      department: 'Departamento *',
       city: 'Provincia',
       town: 'Distrito'
     }

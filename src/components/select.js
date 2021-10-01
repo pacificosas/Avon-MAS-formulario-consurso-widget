@@ -5,15 +5,16 @@ import {
   Select,
   FormControl,
   InputLabel,
-  MenuItem
+  MenuItem,
+  FormHelperText
 } from '@mui/material'
 
-const CustomeSelect = (props) => {
+const CustomeSelect = ({ helperText, error, ...props }) => {
   const labelId = props.label.replace(/\s*/, '') + 'label'
   const options = props.options.map((opt, index) => {
     return <MenuItem value={opt.value } key={index}>{opt.label}</MenuItem>
   })
-  return <FormControl >
+  return <FormControl error={error}>
       <InputLabel id={ labelId}>{props.label}</InputLabel>
     <Select
       style={{ minWidth: props.minWidth || '250px' }}
@@ -28,6 +29,7 @@ const CustomeSelect = (props) => {
     {options}
 
     </Select>
+    <FormHelperText >{helperText}</FormHelperText>
   </FormControl>
 }
 
