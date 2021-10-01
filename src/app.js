@@ -1,7 +1,13 @@
 import React from 'react'
+import DateAdapter from '@mui/lab/AdapterMoment'
+import LocalizationProvider from '@mui/lab/LocalizationProvider'
+
+import Form from './components/form'
 
 const App = () => {
-  return <h1>Hello World!</h1>
+  return <LocalizationProvider dateAdapter={DateAdapter}>
+    <Form/>
+  </LocalizationProvider>
 }
 
 export default App
