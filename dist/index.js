@@ -34670,6 +34670,19 @@ var Form = function Form() {
       alert(JSON.stringify(values, null, 2));
     }
   });
+
+  var validate = function validate(name) {
+    if (formik.touched[name] && formik.errors[name]) {
+      return true;
+    }
+
+    return false;
+  };
+
+  var getError = function getError(name) {
+    return formik.touched[name] && formik.errors[name];
+  };
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react__WEBPACK_IMPORTED_MODULE_1__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("form", {
     onSubmit: formik.handleSubmit
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_FormBodyLayout__WEBPACK_IMPORTED_MODULE_7__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_formUserFields__WEBPACK_IMPORTED_MODULE_5__["default"], {
@@ -34679,15 +34692,15 @@ var Form = function Form() {
     onChange: formik.handleChange,
     value: formik.values.newsLetter,
     label: 'newsLetter',
-    error: formik.touched.newsLetter && formik.errors.newsLetter,
-    helperText: formik.errors.newsLetter
+    error: validate('newsLetter'),
+    helperText: getError('newsLetter')
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_checkbox__WEBPACK_IMPORTED_MODULE_6__["default"], {
     name: "acceptTerms",
     onChange: formik.handleChange,
     value: formik.values.acceptTerms,
     label: 'Acepto Terminos y condiciones',
-    error: !!(formik.touched.acceptTerms && formik.errors.acceptTerms),
-    helperText: formik.errors.acceptTerms
+    error: validate('acceptTerms'),
+    helperText: getError('acceptTerms')
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__["default"], {
     type: "submit",
     variant: "contained",

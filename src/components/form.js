@@ -86,6 +86,17 @@ const Form = () => {
 
   })
 
+  const validate = name => {
+    if (formik.touched[name] && formik.errors[name]) {
+      return true
+    }
+    return false
+  }
+
+  const getError = (name) => {
+    return (formik.touched[name]) && formik.errors[name]
+  }
+
   return <React.Fragment>
 
     <form onSubmit={formik.handleSubmit}>
@@ -100,8 +111,8 @@ const Form = () => {
           onChange={formik.handleChange}
           value={formik.values.newsLetter}
           label={'newsLetter'}
-          error={formik.touched.newsLetter && formik.errors.newsLetter}
-          helperText={ formik.errors.newsLetter}
+          error={validate('newsLetter')}
+          helperText={getError('newsLetter')}
         />
 
         <Check
@@ -109,8 +120,8 @@ const Form = () => {
           onChange={formik.handleChange}
           value={formik.values.acceptTerms}
           label={'Acepto Terminos y condiciones'}
-          error={!!((formik.touched.acceptTerms && formik.errors.acceptTerms))}
-          helperText={ formik.errors.acceptTerms}
+          error={validate('acceptTerms')}
+          helperText={getError('acceptTerms')}
         />
         <Button type="submit" variant="contained" fullWidth sx={{ mt: '2rem' }}>Enviar</Button>
 
