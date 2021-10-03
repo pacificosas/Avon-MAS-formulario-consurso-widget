@@ -27,7 +27,9 @@ const FormUserFields = ({ formik }) => {
       return
     }
     formik.setFieldValue('city', '')
-    getCities(formik.values.department)
+    const from = departments.find(d => currentDepto === d.name)?.id
+    console.log(from, currentDepto)
+    getCities(from)
   }, [formik.values.department])
 
   React.useEffect(() => {
@@ -37,7 +39,8 @@ const FormUserFields = ({ formik }) => {
     }
     if (country !== 'co') {
       formik.setFieldValue('town', '')
-      getTowns(currentCity)
+      const from = cities.find(d => currentCity === d.name)?.id
+      getTowns(from)
     }
   }, [formik.values.city])
   const validate = name => {

@@ -5,14 +5,18 @@ const fetchData = country => type => async from => {
   const res = await fetch(`${api}/geography/${type}?country=${country}${from >= 0 ? '&fromId=' + from : ''}`)
   const result = await res.json()
   return result.payload.map(loc => {
-    let value
-    if (type === 'departments') { value = loc.id }
-    if (type === 'cities') { value = loc.departmentId }
-    if (type === 'towns') { value = loc.cityId }
+    let from
+    const id = loc.id
+    if (type === 'departments') { from = loc.id }
+    if (type === 'cities') { from = loc.departmentId }
+    if (type === 'towns') { from = loc.cityId }
 
     return {
       label: loc.name,
-      value
+      value: loc.name,
+      name: loc.name,
+      id,
+      from
     }
   })
 }
