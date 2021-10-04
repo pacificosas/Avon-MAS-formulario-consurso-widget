@@ -12,6 +12,7 @@ import FormLayout from './FormBodyLayout'
 
 import { Button } from '@mui/material'
 import Layout from './appLayout'
+import Success from './sucessPopup'
 
 const validationSchema = Yup.object().shape({
 
@@ -32,6 +33,9 @@ const validationSchema = Yup.object().shape({
 
 const api = process.env.API_FORM
 const Form = () => {
+  const [submited, setSubmited] = React.useState(false)
+  const [popupMsg, setpopupMsg] = React.useState()
+
   const context = getContext()
   const formik = useFormik({
     validationSchema: validationSchema,
@@ -54,7 +58,7 @@ const Form = () => {
 
     },
 
-    onSubmit: (values, { setErrors }) => {
+    onSubmit: async (values, { setErrors, resetForm }) => {
       if (values.birthDate.getYear() > 101 || values.birthDate.getYear() < 21) {
         setErrors({ birthDate: 'Fecha inválida' })
         return
@@ -65,14 +69,21 @@ const Form = () => {
           return
         }
       }
-      fetch(`${api}/users/${context.country}`,
-        {
-          headers: { 'Content-Type': 'application/json' },
-          method: 'POST',
-          body: JSON.stringify(values)
-        }
-      )
-      alert(JSON.stringify(values, null, 2))
+      try {
+        await fetch(`${api}/users/${context.country}`,
+          {
+            headers: { 'Content-Type': 'application/json' },
+            method: 'POST',
+            body: JSON.stringify(values)
+          }
+        )
+        resetForm()
+
+        setpopupMsg(['Registro existoso'])
+      } catch (error) {
+        setpopupMsg(['Tenemos problemas procesando tu solicitud,', 'intentalo más tarde'])
+      }
+      setSubmited(true)
     }
 
   })
@@ -87,8 +98,18 @@ const Form = () => {
   const getError = (name) => {
     return (formik.touched[name]) && formik.errors[name]
   }
-  return <React.Fragment>
 
+  return <React.Fragment>
+    {submited && popupMsg && <Success>
+      <h3 align="center">
+        {popupMsg.reduce((acc, txt, i) => [...acc, txt, <br key={i} />], [])}
+      </h3>
+      <Button type="submit" variant="contained" fullWidth sx={{ mt: '2rem' }}
+        onClick={() => setSubmited(false)}
+      >
+        Continuar
+      </Button>
+    </Success>}
     <form onSubmit={formik.handleSubmit}>
 
       <Layout>
@@ -119,7 +140,7 @@ const Form = () => {
             error={validate('acceptTerms')}
             helperText={getError('acceptTerms')}
           />
-          <Button type="submit" variant="contained" fullWidth sx={{ mt: '2rem' }}>Enviar</Button>
+          <Button type="submit" variant="contained" sx={{ mt: '2rem' }}>Enviar</Button>
         </FormLayout>
       </Layout>
 

@@ -29,7 +29,6 @@ const FormUserFields = ({ formik, validate, getError }) => {
     }
     formik.setFieldValue('city', '')
     const from = departments.find(d => currentDepto === d.name)?.id
-    console.log(from, currentDepto)
     getCities(from)
   }, [formik.values.department])
 
