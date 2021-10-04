@@ -18,6 +18,7 @@ const FormUserFields = ({ formik, validate, getError }) => {
   const [cities, getCities] = useLocationOptions((from) => location.getCities(from))
   const [towns, getTowns] = useLocationOptions((from) => location.getTowns(from))
 
+  const [tellMoreLength, setTellMoreLength] = React.useState(0)
   React.useEffect(() => {
     getDepartments()
   }, [])
@@ -171,6 +172,21 @@ const FormUserFields = ({ formik, validate, getError }) => {
           size="small"
           error={validate('instagram')}
           helperText={getError('instagram')}
+    />
+
+         <TextField
+          label="Cuéntanos"
+          name="tellMore"
+          onChange={(e) => {
+            formik.handleChange(e)
+            setTellMoreLength(e.target.value.trim().length)
+          }}
+          value={formik.values.tellMore}
+          size="small"
+          error={validate('tellMore')}
+          helperText={`${tellMoreLength} / 299 ${getError('tellMore') ? ' - ' + getError('tellMore') : ''}`}
+          multiline
+          rows={4}
         />
 
   </React.Fragment>

@@ -28,7 +28,9 @@ const validationSchema = Yup.object().shape({
   department: Yup.string().trim().required('Campo obligatorio'),
   city: Yup.string().trim().required('Campo obligatorio'),
   acceptTerms: Yup.boolean().oneOf([true], 'Debes aceptar los terminos y condiciones para continuar'),
-  newsLetter: Yup.boolean()
+  newsLetter: Yup.boolean(),
+  tellMore: Yup.string().trim().max(299, 'max 299 caracteres')
+
 })
 
 const api = process.env.API_FORM
@@ -54,7 +56,8 @@ const Form = () => {
       newsLetter: false,
       department: '',
       city: '',
-      town: ''
+      town: '',
+      tellMore: ''
 
     },
 
