@@ -1,9 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './app'
-import context from './services/context'
+import { initContext } from './services/context'
 
-window.pacificaConcursoWidget = ({ country, container, selector } = {}) => {
-  context.country = country
+window.pacificaConcursoWidget = ({ country, imagesPath, container, selector } = {}) => {
+  initContext({
+    country,
+    imagesPath
+  })
+
   ReactDOM.render(<App/>, container || document.querySelector(selector || '#pacificaConcursoWidget'))
 }

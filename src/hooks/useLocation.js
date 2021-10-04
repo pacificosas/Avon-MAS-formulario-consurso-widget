@@ -6,7 +6,6 @@ const userLocationOptions = (location) => {
   const getLocation = async (from) => {
     const newVals = await location(from)
     await setValues(newVals)
-    console.log(newVals)
   }
 
   return [options, getLocation]

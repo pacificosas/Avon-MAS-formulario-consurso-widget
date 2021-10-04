@@ -25,7 +25,7 @@ const getLabels = (country) => {
   if (country === 'co') {
     return {
       department: 'Departamento *',
-      city: 'Ciudad',
+      city: 'Ciudad *',
       town: null
     }
   }
@@ -33,16 +33,16 @@ const getLabels = (country) => {
   if (country === 'ec') {
     return {
       department: 'Provincia *',
-      city: 'Canton',
-      town: 'Parroquia'
+      city: 'Canton *',
+      town: 'Parroquia *'
     }
   }
 
   if (country === 'pe') {
     return {
       department: 'Departamento *',
-      city: 'Provincia',
-      town: 'Distrito'
+      city: 'Provincia *',
+      town: 'Distrito *'
     }
   }
 }

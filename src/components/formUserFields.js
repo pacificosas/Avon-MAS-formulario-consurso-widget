@@ -2,14 +2,15 @@
 import React from 'react'
 import DatePicker from './datePicker'
 import Select from './select'
-import context from '../services/context'
+import getContext from '../services/context'
 import useLocationOptions from '../hooks/useLocation'
 
 import locationService from '../services/location.service'
 
 import { TextField } from '@mui/material'
 
-const FormUserFields = ({ formik }) => {
+const FormUserFields = ({ formik, validate, getError }) => {
+  const context = getContext()
   const country = context.country
   const location = locationService(country)
 
@@ -43,16 +44,6 @@ const FormUserFields = ({ formik }) => {
       getTowns(from)
     }
   }, [formik.values.city])
-  const validate = name => {
-    if (formik.touched[name] && formik.errors[name]) {
-      return true
-    }
-    return false
-  }
-
-  const getError = (name) => {
-    return (formik.touched[name]) && formik.errors[name]
-  }
 
   return <React.Fragment>
      <TextField

@@ -8,6 +8,9 @@ const theme = createTheme({
     socondary: {
       main: '#e31b6c'
     }
+  },
+  typography: {
+    fontSize: 24
   }
 })
 

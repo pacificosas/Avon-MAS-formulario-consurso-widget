@@ -1,28 +1,18 @@
 import React from 'react'
-import styled from 'styled-components'
+
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
-import context from '../services/context'
+import getContext from '../services/context'
 
 import UserFields from './formUserFields'
 
 import Check from './checkbox'
-import Layout from './FormBodyLayout'
+import FormLayout from './FormBodyLayout'
 
 import { Button } from '@mui/material'
+import Layout from './appLayout'
 
-const FooterWrapper = styled.div`
-  display:flex;
-  align-items:center;
-  justify-items:center;
-  flex-direction:column;
-  margin:1rem auto;
-  margin-top:2rem;
-`
-//   if (value.getYear() > 101  value.getYear() < 21) {
-//     return
-//   }
 const validationSchema = Yup.object().shape({
 
   firstName: Yup.string().trim().required('Campo obligatorio'),
@@ -42,6 +32,7 @@ const validationSchema = Yup.object().shape({
 
 const api = process.env.API_FORM
 const Form = () => {
+  const context = getContext()
   const formik = useFormik({
     validationSchema: validationSchema,
     initialValues: {
@@ -96,36 +87,41 @@ const Form = () => {
   const getError = (name) => {
     return (formik.touched[name]) && formik.errors[name]
   }
-
   return <React.Fragment>
 
     <form onSubmit={formik.handleSubmit}>
 
       <Layout>
-        <UserFields formik={formik}/>
+        <picture>
+
+          <source srcSet={`${context.imagesPath}formDesktop.jpg`} media="(min-width: 768px)"/>
+          <source srcSet={`${context.imagesPath}formMobile.jpg`} media="(max-width: 768px)"/>
+          <img src={`${context.imagesPath}`} alt="img"/>
+
+        </picture>
+
+        <FormLayout>
+          <UserFields formik={formik} validate={validate} getError={getError} />
+          <Check
+            name="newsLetter"
+            onChange={formik.handleChange}
+            value={formik.values.newsLetter}
+            label={'Quiero Recibir noticias de descuentos y promociones especiales'}
+            error={validate('newsLetter')}
+            helperText={getError('newsLetter')}
+          />
+
+          <Check
+            name="acceptTerms"
+            onChange={formik.handleChange}
+            value={formik.values.acceptTerms}
+            label={'Acepto los Terminos y condiciones'}
+            error={validate('acceptTerms')}
+            helperText={getError('acceptTerms')}
+          />
+          <Button type="submit" variant="contained" fullWidth sx={{ mt: '2rem' }}>Enviar</Button>
+        </FormLayout>
       </Layout>
-
-      <FooterWrapper>
-        <Check
-          name="newsLetter"
-          onChange={formik.handleChange}
-          value={formik.values.newsLetter}
-          label={'newsLetter'}
-          error={validate('newsLetter')}
-          helperText={getError('newsLetter')}
-        />
-
-        <Check
-          name="acceptTerms"
-          onChange={formik.handleChange}
-          value={formik.values.acceptTerms}
-          label={'Acepto Terminos y condiciones'}
-          error={validate('acceptTerms')}
-          helperText={getError('acceptTerms')}
-        />
-        <Button type="submit" variant="contained" fullWidth sx={{ mt: '2rem' }}>Enviar</Button>
-
-      </FooterWrapper>
 
     </form>
 
