@@ -112,8 +112,8 @@ const FormUserFields = ({ formik, validate, getError }) => {
           onChange={formik.handleChange}
           size="small"
           options={[
-            { value: 'ciudadana', label: 'Documento de Ciudadania' },
-            { value: 'extranjera', label: 'Documento de Extranjeria' }
+            { value: 'ciudadana', label: 'Documento de Ciudadanía' },
+            { value: 'extranjera', label: 'Documento de Extranjería' }
           ]}
           error={validate('documentIdType')}
           helperText={getError('documentIdType')}
@@ -181,6 +181,7 @@ const FormUserFields = ({ formik, validate, getError }) => {
             formik.handleChange(e)
             setTellMoreLength(e.target.value.trim().length)
           }}
+          placeholder="En una frase, cuéntanos cómo a través del rosa contribuyes a esta causa"
           value={formik.values.tellMore}
           size="small"
           error={validate('tellMore')}

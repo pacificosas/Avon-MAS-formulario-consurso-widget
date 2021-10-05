@@ -33,7 +33,7 @@ const getLabels = (country) => {
   if (country === 'ec') {
     return {
       department: 'Provincia *',
-      city: 'Canton *',
+      city: 'Cantón *',
       town: 'Parroquia *'
     }
   }

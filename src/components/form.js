@@ -29,7 +29,7 @@ const validationSchema = Yup.object().shape({
   city: Yup.string().trim().required('Campo obligatorio'),
   acceptTerms: Yup.boolean().oneOf([true], 'Debes aceptar los terminos y condiciones para continuar'),
   newsLetter: Yup.boolean(),
-  tellMore: Yup.string().trim().max(299, 'max 299 caracteres')
+  tellMore: Yup.string().trim().max(299, 'max 299 caracteres').required('Campo obligatorio')
 
 })
 
@@ -73,18 +73,22 @@ const Form = () => {
         }
       }
       try {
-        await fetch(`${api}/users/${context.country}`,
+        const req = await fetch(`${api}/users/${context.country}`,
           {
             headers: { 'Content-Type': 'application/json' },
             method: 'POST',
             body: JSON.stringify(values)
           }
         )
+        if (req.status !== 200) {
+          throw new Error()
+        }
+
         resetForm()
 
-        setpopupMsg(['Registro existoso'])
+        setpopupMsg(['Registro exitoso'])
       } catch (error) {
-        setpopupMsg(['Tenemos problemas procesando tu solicitud,', 'intentalo más tarde'])
+        setpopupMsg(['Tenemos problemas procesando tu solicitud,', 'inténtalo más tarde'])
       }
       setSubmited(true)
     }
@@ -130,7 +134,7 @@ const Form = () => {
             name="newsLetter"
             onChange={formik.handleChange}
             value={formik.values.newsLetter}
-            label={'Quiero Recibir noticias de descuentos y promociones especiales'}
+            label={'Quiero recibir noticias de descuentos y promociones especiales.'}
             error={validate('newsLetter')}
             helperText={getError('newsLetter')}
           />
@@ -139,7 +143,7 @@ const Form = () => {
             name="acceptTerms"
             onChange={formik.handleChange}
             value={formik.values.acceptTerms}
-            label={'Acepto los Terminos y condiciones'}
+            label={'Acepto los Términos y Condiciones'}
             error={validate('acceptTerms')}
             helperText={getError('acceptTerms')}
           />
