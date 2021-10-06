@@ -47,7 +47,7 @@ const FormUserFields = ({ formik, validate, getError }) => {
 
   return <React.Fragment>
      <TextField
-          label="Nombre Completo *"
+          label="Nombre *"
           name="firstName"
           onChange={formik.handleChange}
           value={formik.values.firstName}
@@ -172,23 +172,27 @@ const FormUserFields = ({ formik, validate, getError }) => {
           size="small"
           error={validate('instagram')}
           helperText={getError('instagram')}
-    />
-
-         <TextField
-          label="Cuéntanos"
-          name="tellMore"
-          onChange={(e) => {
-            formik.handleChange(e)
-            setTellMoreLength(e.target.value.trim().length)
-          }}
-          placeholder="En una frase, cuéntanos cómo a través del rosa contribuyes a esta causa"
-          value={formik.values.tellMore}
-          size="small"
-          error={validate('tellMore')}
-          helperText={`${tellMoreLength} / 299 ${getError('tellMore') ? ' - ' + getError('tellMore') : ''}`}
-          multiline
-          rows={4}
         />
+
+        <div>
+          <p><strong>En una frase, cuéntanos cómo a través del rosa contribuyes a esta causa</strong></p>
+      <TextField
+            fullWidth
+            label="Cuéntanos *"
+            name="tellMore"
+            onChange={(e) => {
+              formik.handleChange(e)
+              setTellMoreLength(e.target.value.trim().length)
+            }}
+
+            value={formik.values.tellMore}
+            size="small"
+            error={validate('tellMore')}
+            helperText={`${tellMoreLength} / 299 ${getError('tellMore') ? ' - ' + getError('tellMore') : ''}`}
+            multiline
+            rows={4}
+          />
+        </div>
 
   </React.Fragment>
 }
