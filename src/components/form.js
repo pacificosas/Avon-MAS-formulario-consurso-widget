@@ -143,7 +143,7 @@ const Form = () => {
             name="acceptTerms"
             onChange={formik.handleChange}
             value={formik.values.acceptTerms}
-            label={'Acepto los Términos y Condiciones'}
+            label={'Acepto los Términos y Condiciones.'}
             error={validate('acceptTerms')}
             helperText={getError('acceptTerms')}
           />

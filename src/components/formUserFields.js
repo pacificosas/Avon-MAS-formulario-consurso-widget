@@ -97,7 +97,7 @@ const FormUserFields = ({ formik, validate, getError }) => {
           helperText={getError('cellPhone')}
         />
         <TextField
-          label="Correo electronico *"
+          label="Correo electrónico *"
           name="email"
           onChange={formik.handleChange}
           value={formik.values.email}
