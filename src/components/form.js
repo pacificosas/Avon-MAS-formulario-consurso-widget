@@ -146,6 +146,7 @@ const Form = () => {
             label={'Acepto los Términos y Condiciones.'}
             error={validate('acceptTerms')}
             helperText={getError('acceptTerms')}
+            href='/Terminos-Condiciones-Octubre-Rosa'
           />
           <Button type="submit" variant="contained" sx={{ mt: '2rem' }}>Enviar</Button>
         </FormLayout>
