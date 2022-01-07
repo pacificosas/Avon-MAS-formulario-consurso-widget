@@ -19,7 +19,7 @@ const validationSchema = Yup.object().shape({
   firstName: Yup.string().trim().required('Campo obligatorio'),
   firstLastName: Yup.string().trim().required('Campo obligatorio'),
   secondLastName: Yup.string().trim().required('Campo obligatorio'),
-  instagram: Yup.string().trim().matches(/^@.*/, 'Tu usuario debe iniciar por la letra @  - ej: @Avon'),
+  direction: Yup.string().trim().max(299, 'max 299 caracteres').required('Campo obligatorio'), // new
   email: Yup.string().trim().email('Invalid email').required('Campo obligatorio'),
   cellPhone: Yup.string().trim().required('Campo obligatorio').matches(/^[0-9]+$/, 'Celular inválido').min(6, 'Celular inválido'),
   birthDate: Yup.date().required('Campo obligatorio'),
@@ -28,9 +28,7 @@ const validationSchema = Yup.object().shape({
   department: Yup.string().trim().required('Campo obligatorio'),
   city: Yup.string().trim().required('Campo obligatorio'),
   acceptTerms: Yup.boolean().oneOf([true], 'Debes aceptar los terminos y condiciones para continuar'),
-  newsLetter: Yup.boolean(),
-  tellMore: Yup.string().trim().max(299, 'max 299 caracteres').required('Campo obligatorio')
-
+  newsLetter: Yup.boolean()
 })
 
 const api = process.env.API_FORM
@@ -46,7 +44,8 @@ const Form = () => {
       firstName: '',
       firstLastName: '',
       secondLastName: '',
-      instagram: '',
+      // instagram: '',
+      direction: '', // new
       email: '',
       birthDate: '',
       cellPhone: '',
@@ -56,8 +55,8 @@ const Form = () => {
       newsLetter: false,
       department: '',
       city: '',
-      town: '',
-      tellMore: ''
+      town: ''
+      // tellMore: ''
 
     },
 
@@ -120,14 +119,6 @@ const Form = () => {
     <form onSubmit={formik.handleSubmit}>
 
       <Layout>
-        <picture>
-
-          <source srcSet={`${context.imagesPath}formDesktop.jpg`} media="(min-width: 768px)"/>
-          <source srcSet={`${context.imagesPath}formMobile.jpg`} media="(max-width: 768px)"/>
-          <img src={`${context.imagesPath}`} alt="img"/>
-
-        </picture>
-
         <FormLayout>
           <UserFields formik={formik} validate={validate} getError={getError} />
           <Check
