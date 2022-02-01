@@ -22,7 +22,7 @@ const Card = styled.div`
   background:white;
   border-radius:4px;
   padding:4rem;
-  max-width:80vw;
+  max-width:400px;
 `
 const SuccessPopup = props => {
   return <Wrapper>

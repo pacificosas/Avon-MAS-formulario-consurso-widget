@@ -130,7 +130,7 @@ const Form = () => {
     if (arg.type === 'success') {
       if (arg.country === 'co') {
         return <>
-         ¡Registro exitoso! Hemos llegado al límite de unidades, tienes un 20%OFF ingresando el cupón
+         ¡Registro exitoso! Hemos llegado al límite de unidades, tienes un 20% OFF ingresando el cupón
           <strong > AVONSUPER </strong>
           en tus compras, para disfrutarlo en tus productos favoritos. Válido del 21 febrero al 9 de marzo solo en <a target="_blank" href="www.avon.com.co">www.avon.com.co</a>
         </>
@@ -138,7 +138,7 @@ const Form = () => {
 
       if (arg.country === 'pe') {
         return <>
-         ¡Registro exitoso! Hemos llegado al límite de unidades, tienes un 20%OFF ingresando el cupón
+         ¡Registro exitoso! Hemos llegado al límite de unidades, tienes un 20% OFF ingresando el cupón
           <strong >AVONSUPER </strong> en tus compras, para disfrutarlo en tus productos favoritos. Válido del 16 febrero al 7 marzo solo en <a target="_blank" href="www.avon.com.pe">www.avon.com.pe</a>
           </>
       }
@@ -173,7 +173,7 @@ const Form = () => {
             name="newsLetter"
             onChange={formik.handleChange}
             value={formik.values.newsLetter}
-            label={'Quiero recibir noticias de descuentos y promociones especiales.'}
+            label={<span style={{ color: 'white' }}>Quiero recibir noticias de descuentos y promociones especiales.</span>}
             error={validate('newsLetter')}
             helperText={getError('newsLetter')}
           />
