@@ -165,7 +165,7 @@ const FormUserFields = ({ formik, validate, getError }) => {
         }
 
          <TextField
-          label="Direción *"
+          label="Dirección *"
           name="direction"
           onChange={formik.handleChange}
           value={formik.values.direction}

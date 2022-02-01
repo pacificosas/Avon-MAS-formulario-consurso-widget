@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -34,7 +34,8 @@ const validationSchema = Yup.object().shape({
 const api = process.env.API_FORM
 const Form = () => {
   const [submited, setSubmited] = React.useState(false)
-  const [popupMsg, setpopupMsg] = React.useState()
+  const [popupProps, setPopupProps] = React.useState()
+  // const [popupData, setPopupData] = React.useState()
 
   const context = getContext()
   const formik = useFormik({
@@ -80,19 +81,32 @@ const Form = () => {
           }
         )
         if (req.status !== 200) {
-          throw new Error()
+          return setPopupProps({ type: 'error' })
         }
 
-        resetForm()
+        const { payload } = await req.json()
+        if (payload.duplicate) {
+          return setPopupProps({ type: 'duplicate' })
+        }
 
-        setpopupMsg(['Registro exitoso'])
+        if (payload.cupon) {
+          return setPopupProps({ type: 'success', country: context.country })
+        }
       } catch (error) {
-        setpopupMsg(['Tenemos problemas procesando tu solicitud,', 'inténtalo más tarde'])
+        console.error(error)
+        return setPopupProps({ type: 'error' })
       }
-      setSubmited(true)
+      resetForm()
     }
 
   })
+
+  useEffect(() => {
+    // setPopupData()
+    console.log(popupProps)
+    // console.log(getPopupData(popupProps))
+    setSubmited(true)
+  }, [popupProps])
 
   const validate = name => {
     if (formik.touched[name] && formik.errors[name]) {
@@ -105,10 +119,44 @@ const Form = () => {
     return (formik.touched[name]) && formik.errors[name]
   }
 
+  const GetPopupData = (arg = {}) => {
+    if (arg.type === 'duplicate') {
+      return <span>Lo sentimos, la cédula ingresada ya se encuentra registrada en nuestro sistema.</span>
+    }
+    if (arg.type === 'error') {
+      return <span>Lo sentimos, verifica tus datos y vuelve a internarlo.</span>
+    }
+
+    if (arg.type === 'success') {
+      if (arg.country === 'co') {
+        return <>
+         ¡Registro exitoso! Hemos llegado al límite de unidades, tienes un 20%OFF ingresando el cupón
+          <strong > AVONSUPER </strong>
+          en tus compras, para disfrutarlo en tus productos favoritos. Válido del 21 febrero al 9 de marzo solo en <a target="_blank" href="www.avon.com.co">www.avon.com.co</a>
+        </>
+      }
+
+      if (arg.country === 'pe') {
+        return <>
+         ¡Registro exitoso! Hemos llegado al límite de unidades, tienes un 20%OFF ingresando el cupón
+          <strong >AVONSUPER </strong> en tus compras, para disfrutarlo en tus productos favoritos. Válido del 16 febrero al 7 marzo solo en <a target="_blank" href="www.avon.com.pe">www.avon.com.pe</a>
+          </>
+      }
+
+      if (arg.country === 'ec') {
+        return <>
+          ¡Registro exitoso! Hemos llegado al límite de unidades, tienes un 20% OFF ingresando el cupón
+          <strong > AVONSUPER </strong>
+         en tus compras, para disfrutarlo en tus productos favoritos. Válido del 22 febrero al 14 de marzo solo en <a target="_blank" href="www.avon.com.ec">www.avon.com.ec</a>
+        </>
+      }
+    }
+  }
+
   return <React.Fragment>
-    {submited && popupMsg && <Success>
-      <h3 align="center">
-        {popupMsg.reduce((acc, txt, i) => [...acc, txt, <br key={i} />], [])}
+    {submited && popupProps && <Success>
+      <h3 align="center" style={{ fontWeight: 'normal' }}>
+        <GetPopupData {...popupProps}/>
       </h3>
       <Button type="submit" variant="contained" fullWidth sx={{ mt: '2rem' }}
         onClick={() => setSubmited(false)}
@@ -137,7 +185,7 @@ const Form = () => {
             label={'Acepto los Términos y Condiciones.'}
             error={validate('acceptTerms')}
             helperText={getError('acceptTerms')}
-            href='/Terminos-Condiciones-Octubre-Rosa'
+            href='/Terminos-Condiciones-SuperMascara'
           />
           <Button type="submit" variant="contained" sx={{ mt: '2rem' }}>Enviar</Button>
         </FormLayout>

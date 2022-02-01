@@ -31,7 +31,6 @@
     window.addEventListener('load',function(){
       pacificaConcursoWidget({
         country:"co",
-        imagesPath:"https://cdn.jsdelivr.net/gh/pacificosas/Avon-MAS-formulario-consurso-widget@0/assets/co"
       })
     })
   </script>

@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
-
+import Anchor from './anchor'
 import {
   FormControl,
   FormControlLabel,
@@ -9,11 +9,11 @@ import {
 } from '@mui/material'
 
 const Check = ({ helperText, error, ...props }) => {
-  const anchorLabel = <a href={props.href} target="_blank"
-    style={{ color: '#7e28c4' }} rel="noreferrer"
+  const anchorLabel = <Anchor href={props.href} target="_blank"
+  rel="noreferrer"
   >
     {props.label}
-  </a>
+  </Anchor>
   return <FormControl error={error}>
 
     <FormControlLabel
