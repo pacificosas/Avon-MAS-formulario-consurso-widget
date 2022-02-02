@@ -13,6 +13,9 @@ import FormLayout from './FormBodyLayout'
 import { Button } from '@mui/material'
 import Layout from './appLayout'
 import Success from './sucessPopup'
+import Loading from './loading'
+import styled from 'styled-components'
+import Anchor from './anchor'
 
 const validationSchema = Yup.object().shape({
 
@@ -30,12 +33,15 @@ const validationSchema = Yup.object().shape({
   acceptTerms: Yup.boolean().oneOf([true], 'Debes aceptar los terminos y condiciones para continuar'),
   newsLetter: Yup.boolean()
 })
+const FormContainer = styled.div`
+  position:relative;
+  z-index:999;
+`
 
 const api = process.env.API_FORM
 const Form = () => {
   const [submited, setSubmited] = React.useState(false)
   const [popupProps, setPopupProps] = React.useState()
-  // const [popupData, setPopupData] = React.useState()
 
   const context = getContext()
   const formik = useFormik({
@@ -73,6 +79,7 @@ const Form = () => {
         }
       }
       try {
+        setSubmited(true)
         const req = await fetch(`${api}/users/${context.country}`,
           {
             headers: { 'Content-Type': 'application/json' },
@@ -85,6 +92,7 @@ const Form = () => {
         }
 
         const { payload } = await req.json()
+
         if (payload.duplicate) {
           return setPopupProps({ type: 'duplicate' })
         }
@@ -96,16 +104,14 @@ const Form = () => {
         console.error(error)
         return setPopupProps({ type: 'error' })
       }
-      resetForm()
     }
 
   })
 
   useEffect(() => {
-    // setPopupData()
-    console.log(popupProps)
-    // console.log(getPopupData(popupProps))
-    setSubmited(true)
+    if (popupProps) {
+      setSubmited(true)
+    }
   }, [popupProps])
 
   const validate = name => {
@@ -132,14 +138,14 @@ const Form = () => {
         return <>
          ¡Registro exitoso! Hemos llegado al límite de unidades, tienes un 20% OFF ingresando el cupón
           <strong > AVONSUPER </strong>
-          en tus compras, para disfrutarlo en tus productos favoritos. Válido del 21 febrero al 9 de marzo solo en <a target="_blank" href="www.avon.com.co">www.avon.com.co</a>
+          en tus compras, para disfrutarlo en tus productos favoritos. Válido del 21 febrero al 9 de marzo solo en <Anchor target="_blank" href="www.avon.com.co">www.avon.com.co</Anchor>
         </>
       }
 
       if (arg.country === 'pe') {
         return <>
          ¡Registro exitoso! Hemos llegado al límite de unidades, tienes un 20% OFF ingresando el cupón
-          <strong >AVONSUPER </strong> en tus compras, para disfrutarlo en tus productos favoritos. Válido del 16 febrero al 7 marzo solo en <a target="_blank" href="www.avon.com.pe">www.avon.com.pe</a>
+          <strong >AVONSUPER </strong> en tus compras, para disfrutarlo en tus productos favoritos. Válido del 16 febrero al 7 marzo solo en <Anchor target="_blank" href="www.avon.com.pe">www.avon.com.pe</Anchor>
           </>
       }
 
@@ -147,52 +153,55 @@ const Form = () => {
         return <>
           ¡Registro exitoso! Hemos llegado al límite de unidades, tienes un 20% OFF ingresando el cupón
           <strong > AVONSUPER </strong>
-         en tus compras, para disfrutarlo en tus productos favoritos. Válido del 22 febrero al 14 de marzo solo en <a target="_blank" href="www.avon.com.ec">www.avon.com.ec</a>
+         en tus compras, para disfrutarlo en tus productos favoritos. Válido del 22 febrero al 14 de marzo solo en <Anchor target="_blank" href="www.avon.com.ec">www.avon.com.ec</Anchor>
         </>
       }
     }
   }
 
   return <React.Fragment>
-    {submited && popupProps && <Success>
-      <h3 align="center" style={{ fontWeight: 'normal' }}>
+
+    {popupProps && submited && <Success>
+      <p align="center" style={{ fontWeight: 'normal' }}>
         <GetPopupData {...popupProps}/>
-      </h3>
+      </p>
       <Button type="submit" variant="contained" fullWidth sx={{ mt: '2rem' }}
         onClick={() => setSubmited(false)}
       >
         Continuar
       </Button>
     </Success>}
-    <form onSubmit={formik.handleSubmit}>
+    <FormContainer>
+      {submited && <Loading/>}
+      <form onSubmit={formik.handleSubmit}>
 
-      <Layout>
-        <FormLayout>
-          <UserFields formik={formik} validate={validate} getError={getError} />
-          <Check
-            name="newsLetter"
-            onChange={formik.handleChange}
-            value={formik.values.newsLetter}
-            label={<span style={{ color: 'white' }}>Quiero recibir noticias de descuentos y promociones especiales.</span>}
-            error={validate('newsLetter')}
-            helperText={getError('newsLetter')}
-          />
+        <Layout>
+          <FormLayout>
+            <UserFields formik={formik} validate={validate} getError={getError} />
+            <Check
+              name="newsLetter"
+              onChange={formik.handleChange}
+              value={formik.values.newsLetter}
+              label={<span style={{ color: 'white' }}>Quiero recibir noticias de descuentos y promociones especiales.</span>}
+              error={validate('newsLetter')}
+              helperText={getError('newsLetter')}
+            />
 
-          <Check
-            name="acceptTerms"
-            onChange={formik.handleChange}
-            value={formik.values.acceptTerms}
-            label={'Acepto los Términos y Condiciones.'}
-            error={validate('acceptTerms')}
-            helperText={getError('acceptTerms')}
-            href='/Terminos-Condiciones-SuperMascara'
-          />
-          <Button type="submit" variant="contained" sx={{ mt: '2rem' }}>Enviar</Button>
-        </FormLayout>
-      </Layout>
+            <Check
+              name="acceptTerms"
+              onChange={formik.handleChange}
+              value={formik.values.acceptTerms}
+              label={'Acepto los Términos y Condiciones.'}
+              error={validate('acceptTerms')}
+              helperText={getError('acceptTerms')}
+              href='/Terminos-Condiciones-SuperMascara'
+            />
+            <Button type="submit" variant="contained" sx={{ mt: '2rem', m: 'auto' }} styles={{ margin: 'auto' }}disabled={submited}>Enviar</Button>
+          </FormLayout>
+        </Layout>
 
-    </form>
-
+      </form>
+    </FormContainer>
   </React.Fragment>
 }
 
