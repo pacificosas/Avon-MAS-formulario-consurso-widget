@@ -100,6 +100,7 @@ const Form = () => {
         if (payload.cupon) {
           return setPopupProps({ type: 'success', country: context.country })
         }
+        return setPopupProps({})
       } catch (error) {
         console.error(error)
         return setPopupProps({ type: 'error' })
@@ -127,7 +128,7 @@ const Form = () => {
 
   const GetPopupData = (arg = {}) => {
     if (arg.type === 'duplicate') {
-      return <span>Lo sentimos, la cédula ingresada ya se encuentra registrada en nuestro sistema.</span>
+      return <span>Lo sentimos, la cédula, correo electrónico o número de celular ingresados ya se encuentran registrada en nuestro sistema.</span>
     }
     if (arg.type === 'error') {
       return <span>Lo sentimos, verifica tus datos y vuelve a internarlo.</span>
@@ -157,6 +158,8 @@ const Form = () => {
         </>
       }
     }
+
+    return <>¡Registro exitoso! Pronto recibirás nuestra nueva Mascara Super para que la pongas a prueba y nos cuentes tu experiencia en nuestro sitio web</>
   }
 
   return <React.Fragment>
@@ -166,7 +169,10 @@ const Form = () => {
         <GetPopupData {...popupProps}/>
       </p>
       <Button type="submit" variant="contained" fullWidth sx={{ mt: '2rem' }}
-        onClick={() => setSubmited(false)}
+        onClick={() => {
+          setSubmited(false)
+          formik.resetForm()
+        }}
       >
         Continuar
       </Button>

@@ -34835,23 +34835,22 @@ var Form = function Form() {
                 }));
 
               case 23:
-                _context.next = 29;
-                break;
+                return _context.abrupt("return", setPopupProps({}));
 
-              case 25:
-                _context.prev = 25;
+              case 26:
+                _context.prev = 26;
                 _context.t0 = _context["catch"](8);
                 console.error(_context.t0);
                 return _context.abrupt("return", setPopupProps({
                   type: 'error'
                 }));
 
-              case 29:
+              case 30:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[8, 25]]);
+        }, _callee, null, [[8, 26]]);
       }));
 
       function onSubmit(_x, _x2) {
@@ -34883,7 +34882,7 @@ var Form = function Form() {
     var arg = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
     if (arg.type === 'duplicate') {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4__.createElement("span", null, "Lo sentimos, la c\xE9dula ingresada ya se encuentra registrada en nuestro sistema.");
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4__.createElement("span", null, "Lo sentimos, la c\xE9dula, correo electr\xF3nico o n\xFAmero de celular ingresados ya se encuentran registrada en nuestro sistema.");
     }
 
     if (arg.type === 'error') {
@@ -34912,6 +34911,8 @@ var Form = function Form() {
         }, "www.avon.com.ec"));
       }
     }
+
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4__.createElement(react__WEBPACK_IMPORTED_MODULE_4__.Fragment, null, "\xA1Registro exitoso! Pronto recibir\xE1s nuestra nueva Mascara Super para que la pongas a prueba y nos cuentes tu experiencia en nuestro sitio web");
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4__.createElement(react__WEBPACK_IMPORTED_MODULE_4__.Fragment, null, popupProps && submited && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4__.createElement(_sucessPopup__WEBPACK_IMPORTED_MODULE_12__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4__.createElement("p", {
@@ -34927,7 +34928,8 @@ var Form = function Form() {
       mt: '2rem'
     },
     onClick: function onClick() {
-      return setSubmited(false);
+      setSubmited(false);
+      formik.resetForm();
     }
   }, "Continuar")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4__.createElement(FormContainer, null, submited && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4__.createElement(_loading__WEBPACK_IMPORTED_MODULE_13__["default"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_4__.createElement("form", {
     onSubmit: formik.handleSubmit
@@ -35200,7 +35202,7 @@ var _templateObject, _templateObject2, _templateObject3, _templateObject4;
 
 
 
-var Wrapper = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].div(_templateObject || (_templateObject = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\nposition:absolute;\ntop:0;\nleft:0;\nright:0;\nleft:0;\nheight:100vh;\ndisplay:grid;\ngrid-template-columns:1fr;\ngrid-template-rows:1fr;\nalign-items:center;\njustify-items:center;\nz-index:9998;\nbackground:#4242424d;\n"])));
+var Wrapper = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].div(_templateObject || (_templateObject = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\nposition:absolute;\ntop:0;\nleft:0;\nright:0;\nleft:0;\nbottom:0;\ndisplay:grid;\ngrid-template-columns:1fr;\ngrid-template-rows:1fr;\nalign-items:center;\njustify-items:center;\nz-index:9998;\nbackground:#4242424d;\n"])));
 var spinAnimation = (0,styled_components__WEBPACK_IMPORTED_MODULE_2__.keyframes)(_templateObject2 || (_templateObject2 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n \n  to {\n    transform: rotate(360deg); \n  }\n  \n"])));
 var Container = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].div(_templateObject3 || (_templateObject3 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n   display:grid;\n    grid-template-columns: 1fr;\n    grid-template-rows: 1fr;\n    align-items:center;\n    justify-items:center;\n"])));
 var Spinner = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].div(_templateObject4 || (_templateObject4 = (0,_babel_runtime_helpers_taggedTemplateLiteral__WEBPACK_IMPORTED_MODULE_0__["default"])(["\n display: inline-block;\n  width: 50px;\n  height: 50px;\n  border: 3px solid hsl(270, 4%, 55%);\n  border-radius: 50%;\n  border-top-color: #7e28c4;\n  animation: ", " 1s ease-in-out infinite;\n"])), spinAnimation);
