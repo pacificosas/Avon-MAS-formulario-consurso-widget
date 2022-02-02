@@ -10,7 +10,8 @@ import {
 
 const Check = ({ helperText, error, ...props }) => {
   const anchorLabel = <Anchor href={props.href} target="_blank"
-  rel="noreferrer"
+    rel="noreferrer"
+    white
   >
     {props.label}
   </Anchor>

@@ -42,7 +42,7 @@ const api = process.env.API_FORM
 const Form = () => {
   const [submited, setSubmited] = React.useState(false)
   const [popupProps, setPopupProps] = React.useState()
-
+  const [popupContent, setPopupContent] = React.useState()
   const context = getContext()
   const formik = useFormik({
     validationSchema: validationSchema,
@@ -112,6 +112,7 @@ const Form = () => {
   useEffect(() => {
     if (popupProps) {
       setSubmited(true)
+      setPopupContent(<GetPopupData {...popupProps}/>)
     }
   }, [popupProps])
 
@@ -164,14 +165,15 @@ const Form = () => {
 
   return <React.Fragment>
 
-    {popupProps && submited && <Success>
+    {popupProps && submited && popupContent && <Success>
       <p align="center" style={{ fontWeight: 'normal' }}>
-        <GetPopupData {...popupProps}/>
+        {popupContent}
       </p>
       <Button type="submit" variant="contained" fullWidth sx={{ mt: '2rem' }}
         onClick={() => {
           setSubmited(false)
           formik.resetForm()
+          setPopupContent(null)
         }}
       >
         Continuar
