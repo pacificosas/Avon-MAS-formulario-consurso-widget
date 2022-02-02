@@ -7,7 +7,7 @@ top:0;
 left:0;
 right:0;
 left:0;
-height:100vh;
+bottom:0;
 display:grid;
 grid-template-columns:1fr;
 grid-template-rows:1fr;
